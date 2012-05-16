@@ -14,19 +14,11 @@ import org.specs2.mutable.Specification
 class ElementSpec extends Specification {
   "Element" should {
 
-    "have features" in new tE{
-      testElement.getAllFeatures.toList shouldEqual List()
-    }
     "have a featuresDataAttribute Method" in new tE{
-      testElement.featuresDataAttribute shouldEqual ""
-      testElement.addFeature( 'test)
-      testElement.addFeature('aTest)
-      testElement.featuresDataAttribute shouldEqual "test,aTest"
-    }
-    "a method to add features" in new tE{
-      testElement.addFeatures(List('a,'b))
-      testElement.addFeature('c)
-      testElement.getAllFeatures.toList shouldEqual List('a,'b,'c)
+      testElement.featuresDataAttribute shouldEqual "{}"
+      testElement.addFeature(("test", 5))
+      testElement.addFeature(("confidence","none"))
+      testElement.featuresDataAttribute shouldEqual "{\"test\" : 5, \"confidence\" : \"none\"}"
     }
   }
 
@@ -38,14 +30,14 @@ class ElementSpec extends Specification {
       Element.fontFeaturesFromHTML(<span class="ocrx_word" title="bbox 1216 1245 1354 1269" style="font-size:8pt;font-family:'Times New Roman';font-style:bold" >Schiste</span>) shouldEqual Some(List(Symbol("8pt"), 'TimesNewRoman))
     }
   }
-}
 
-trait tE extends org.specs2.specification.Scope {
-  val testElement = new Element{
-        def toHTML(zoom:Double) = <html></html>
-        val coordinates = ((1,2),(3,4))
-        val enclosingPage = 0
-        val enclosingPageNumber = 0
-        val fontFeatures = None
+  trait tE extends org.specs2.specification.Scope {
+    val testElement = new Element{
+          def toHTML(zoom:Double) = <html></html>
+          val coordinates = ((1,2),(3,4))
+          val enclosingPage = 0
+          val enclosingPageNumber = 0
+          val fontFeatures = None
+    }
   }
 }

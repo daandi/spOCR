@@ -64,10 +64,11 @@ class PageSpec extends Specification {
     }
   }
 
+  trait parsedText extends Scope {
+    val parser = new HTMLParser
+    val testHTML = parser.fromFile( this.getClass.getResource("/test.html").getFile )
+    val examplePage = Page.fromHTML(testHTML)
+  }
+
 }
 
-trait parsedText extends Scope {
-  val parser = new HTMLParser
-  val testHTML = parser.fromFile( this.getClass.getResource("/test.html").getFile )
-  val examplePage = Page.fromHTML(testHTML)
-}

@@ -23,12 +23,13 @@ class WordSpec extends Specification {
       }
     }
     "from HTML" in {
-      Word.fromHTML(<span class='doesnt_matter' title="bbox 1 2 3 4">test</span>, 0) shouldEqual new Word(((1,2),(3,4)), "test",0)
+      Word.fromHOCR(<span class='doesnt_matter' title="bbox 1 2 3 4">test</span>, 0) shouldEqual new Word(((1,2),(3,4)), "test",0)
+    }
+
+    trait ew extends Scope{
+      val exampleWord = new Word(((1,2),(3,4)), "test", 0)
     }
   }
 
 }
 
-trait ew extends Scope{
-  val exampleWord = new Word(((1,2),(3,4)), "test", 0)
-}

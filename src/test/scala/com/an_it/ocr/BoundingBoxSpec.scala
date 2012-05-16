@@ -72,11 +72,13 @@ class BoundingBoxSpec extends Specification{
       new BoundingBox { val coordinates = ((0,0),(100,50)) }.toCSS(0.5) shouldEqual "position:absolute; top:0px; left:0px; height:25px; width:50px;"
     }
   }
+
+  trait testBoxes extends Scope{
+    val box1 = new BoundingBox { val coordinates = ((2,1),(10,5)) }
+    val box2 = new BoundingBox { val coordinates = ((12,8),(18,14)) }
+    val bigBox = new BoundingBox { val coordinates = ((0,0),(100,50)) }
+
+  }
+
 }
 
-trait testBoxes extends Scope{
-  val box1 = new BoundingBox { val coordinates = ((2,1),(10,5)) }
-  val box2 = new BoundingBox { val coordinates = ((12,8),(18,14)) }
-  val bigBox = new BoundingBox { val coordinates = ((0,0),(100,50)) }
-
-}
