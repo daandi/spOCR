@@ -19,12 +19,12 @@ case class Word(
   var nextWordDistance : Option[Int]  = None
 
   def toHTML(zoom: Double = 1) : NodeSeq =
-    <span class={"OCRWord"} data-text={text} data-features={featuresDataAttribute} style={ toCSS(zoom) }></span>
+    <span class={"OCRWord"} data-text={text} data-features={featuresDataAttribute} style={ toCSS(zoom) }>{}</span>
 }
 
 object Word {
 
-  def fromHTML( html : xml.Node,  enclosingPageNumber: Int = 0) = {
+  def fromHOCR( html : xml.Node,  enclosingPageNumber: Int = 0) = {
     new Word(Element.extractCoordinates(html), html.text, enclosingPageNumber, Element.fontFeaturesFromHTML(html))
   }
 

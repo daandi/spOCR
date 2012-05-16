@@ -29,7 +29,7 @@ case class Line(
 }
 
 object Line {
-  def fromHTML(html : xml.Node, enclosingPageNumber: Int= 0) =  new Line(Element.extractCoordinates(html), buildWordSeq(html, enclosingPageNumber), enclosingPageNumber,Element.fontFeaturesFromHTML(html))
+  def fromHOCR(html : xml.Node, enclosingPageNumber: Int= 0) =  new Line(Element.extractCoordinates(html), buildWordSeq(html, enclosingPageNumber), enclosingPageNumber,Element.fontFeaturesFromHTML(html))
 
   def isOCRWord(html : xml.NodeSeq) = Element.extractOCRClass(html) == 'ocrx_word
 

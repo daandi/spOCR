@@ -18,24 +18,22 @@ abstract class Element extends BoundingBox {
   // coordinates for BoundingBox Trait are given in constructor
 
   val fontFeatures : Option[List[Symbol]]
-  private val features =  ListBuffer.empty[Symbol]
+  private var features =  Map.empty[String,Any]
 
   val enclosingPageNumber : Int
 
-  def addFeature(feature: Symbol) {
-    features += feature
+  def addFeature(f : (String,Any)) {
+    features =  features ++ Map(f._1 -> f._2)
   }
-  def addFeatures(fs: List[Symbol]) {
+  def addFeatures(fs: List[(String,Any)]) {
     fs foreach (addFeature(_))
   }
 
-  def getAllFeatures = features.toList  ::: fontFeatures.getOrElse(List.empty[Symbol])
-
   def normalizedLeft(base: Int) = left - base
 
-  def featuresToCSS = features.distinct.map{ s:Symbol => s.name}.sorted.mkString("_")
+  def featuresToCSS = features.map{ case (n,v) => n + ":" + v.toString }.toList.sorted.mkString("_")
 
-  def featuresDataAttribute = features.toList map(_.name) mkString(",")
+  def featuresDataAttribute = JSONObject(features) toString()
 }
 
 object Element {

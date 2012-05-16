@@ -56,7 +56,7 @@ object Page {
 
  def fromHTML( html : xml.NodeSeq ) : Page = {
    val pageHTML = (html \ "body" \ "div" ).head
-   new Page( extractPageNumber(pageHTML), Element.extractCoordinates(pageHTML), linesFromHTML(pageHTML))
+   new Page( extractPageNumber(pageHTML), Element.extractCoordinates(pageHTML), linesFromHOCR(pageHTML))
  }
 
  def extractPageNumber(html: xml.NodeSeq) : Int =  (html \ "@title").text match {
@@ -64,6 +64,6 @@ object Page {
    case other => throw new Exception (other + " is no valid title string for a page" )
   }
 
- def linesFromHTML(html: xml.NodeSeq) : IndexedSeq[Line] = (html \ "div" \ "p" \ "span") map (Line.fromHTML(_, extractPageNumber(html))) toIndexedSeq
+ def linesFromHOCR(html: xml.NodeSeq) : IndexedSeq[Line] = (html \ "div" \ "p" \ "span") map (Line.fromHOCR(_, extractPageNumber(html))) toIndexedSeq
 
 }
