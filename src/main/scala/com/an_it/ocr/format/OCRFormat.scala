@@ -11,12 +11,16 @@ import com.an_it.ocr.{Word, Line, Page, Document}
  * Time: 18:10
  */
 trait OCRFormat {
-  def document(xml: NodeSeq) : Document
+  def documentFromXML(xml: NodeSeq) : Document
 
-  def page(xml: NodeSeq) : Page
+  def pageFromXML(xml: NodeSeq) : Page
 
-  def line(xml: NodeSeq) : Line
+  def lineFromXML(xml: NodeSeq) : Line
 
-  def word(xml: NodeSeq) : Word
+  def wordFromXML(xml: NodeSeq) : Word
+
+  def extractCoordinatesFromXML(xml : NodeSeq) : ((Int,Int),(Int,Int))
+
+  def pageNumber(xml: NodeSeq) : Int
 
 }

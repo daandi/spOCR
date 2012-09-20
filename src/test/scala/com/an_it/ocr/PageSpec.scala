@@ -21,11 +21,11 @@ class PageSpec extends Specification {
     "be created from HTML" in new parsedText{
       Page.fromHTML(testHTML) shouldNotEqual null
     }
-    "have a line-iterator" in  new parsedText {
-      examplePage.lines.toList(5).toText shouldEqual "Athlai. Dee Herr zerreißet oder zerbricht. Einer von den"
+    "have a lineFromXML-iterator" in  new parsedText {
+      examplePage.lines.toList(5).toText shouldEqual "1621, do bin gen Memmingen zogen, im Namen Gottes, mit Maifter"
     }
-    "have a word-iterator" in  new parsedText {
-      examplePage.words.map(_.text).toList(77) shouldEqual "Betters"
+    "have a wordFromXML-iterator" in  new parsedText {
+      examplePage.words.map(_.text).toList(77) shouldEqual "und"
     }
   }
 
@@ -37,28 +37,29 @@ class PageSpec extends Specification {
 
   "Iterator methods" should  {
     "iterate lines" in new parsedText{
-      examplePage.lines.size shouldEqual 43
+      examplePage.lines.size shouldEqual 45
     }
     "iterate words" in new parsedText{
-      examplePage.words.size shouldEqual 346
+      examplePage.words.size shouldEqual 415
     }
   }
 
   "Display methods" should  {
     "Give Text as String" in new parsedText{
-      examplePage.toText.length shouldEqual  2131
+      examplePage.toText.length shouldEqual  2443
     }
     "build an html" in new parsedText {
-      (examplePage.toHTML \\ "span" ).filter(span => (span \\ "@class").text == "OCRLine").size shouldEqual 43
-      (examplePage.toHTML \\ "span").filter(span => (span \\ "@class").text == "OCRWord").size shouldEqual 346
+      (examplePage.toHTML \\ "span" ).filter(span => (span \\ "@class").text == "OCRLine").size shouldEqual 45
+      (examplePage.toHTML \\ "span").filter(span => (span \\ "@class").text == "OCRWord").size shouldEqual 415
     }
     "given an imagePath toHTML should create an HTML on an image" in new parsedText with temporaryHTMLView{
-      examplePage.imagePath = Some(getClass.getResource("/test.jpg").getPath)
+      examplePage.imagePath = Some(getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath)
       savePageToFile(examplePage.toHTML,"test.html")
+
       pending
     }
     "given an imagePath toHTML should create an HTML on an image with image Propotions inferred" in new parsedText with temporaryHTMLView{
-      examplePage.imagePath = Some(getClass.getResource("/test.jpg").getPath)
+      examplePage.imagePath = Some(getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath)
       savePageToFile(examplePage.toHTML ,"test_inferred.html")
       pending
     }
@@ -66,7 +67,7 @@ class PageSpec extends Specification {
 
   trait parsedText extends Scope {
     val parser = new HTMLParser
-    val testHTML = parser.fromFile( this.getClass.getResource("/test.html").getFile )
+    val testHTML = parser.fromFile( this.getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.html").getFile )
     val examplePage = Page.fromHTML(testHTML)
   }
 

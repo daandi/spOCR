@@ -61,7 +61,7 @@ object Page {
 
  def extractPageNumber(html: xml.NodeSeq) : Int =  (html \ "@title").text match {
    case pageNumberExtractor(pageNumber) => pageNumber.toInt
-   case other => throw new Exception (other + " is no valid title string for a page" )
+   case other => throw new Exception (other + " is no valid title string for a pageFromXML" )
   }
 
  def linesFromHOCR(html: xml.NodeSeq) : IndexedSeq[Line] = (html \ "div" \ "p" \ "span") map (Line.fromHOCR(_, extractPageNumber(html))) toIndexedSeq

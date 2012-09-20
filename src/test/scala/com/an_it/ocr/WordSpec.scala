@@ -12,7 +12,7 @@ import org.specs2.specification.Scope
  */
 
 class WordSpec extends Specification {
-  "Creates a word" in {
+  "Creates a wordFromXML" in {
     val word = new Word(((1,2),(3,4)), "test", 0)
     "Word" should  {
       "have a getter for text" in {

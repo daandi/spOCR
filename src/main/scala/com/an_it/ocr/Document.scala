@@ -16,7 +16,7 @@ import com.an_it.HTMLParser
 import java.io.File
 import collection.parallel.mutable.ParArray
 
-class Document( val pages : ParArray[Page] )
+class Document( val pages : IndexedSeq[Page] )
   extends IndexedSeq[Page] {
 
   lazy val pageNumberMapping : Map[Int,Page] = pages map  {page => Map(page.pageNumber -> page)}  reduce  (_ ++ _)
@@ -51,7 +51,7 @@ object Document {
         doc.getPage( pageNumber ).imagePath = Some(imageFile.toString)
       }
       catch {
-        case e => println("something went wrong while adding image to page" + e  )
+        case e => println("something went wrong while adding image to pageFromXML" + e  )
       }
     }
     doc
@@ -62,9 +62,9 @@ object Document {
         case malformed => throw new Error("Konnte Bilddatei: " + malformed +" keine Seite zuordnen: ");
   }
 
-  def pagesFromFolder(folderPath: String) : ParArray[Page]= {
+  def pagesFromFolder(folderPath: String) : IndexedSeq[Page]= {
     val files = new File(folderPath).listFiles
-    files.par map (pageFromFile(_))
+    files map (pageFromFile(_))
   }
 
 

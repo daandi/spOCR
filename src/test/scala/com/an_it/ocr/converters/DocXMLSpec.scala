@@ -13,9 +13,10 @@ import com.an_it.ocr.{Line, Page, Word, Document}
  */
 
 class DocXMLSpec extends Specification{
-  val doc = new Document(
-    Document.fromFolder( getClass.getResource("/testdoc/hocr/").getFile ).pages.slice(0,10)
-  )
+  val folder = getClass.getResource("/doc/hocr").getFile
+  println(folder)
+  val doc =  Document.fromFolder(folder)
+
   val converter = new DocXML(doc)
 
   "DocXML" should {
@@ -38,12 +39,12 @@ class DocXMLSpec extends Specification{
           </groundtruth>
         </token>)
     }
-    "convert a page to a NodeSeq wit all pages" in {
+    "convert a pageFromXML to a NodeSeq wit all pages" in {
       val p = doc.getPage(5)
       (converter.pageToXML(p) \\ "token").toSeq.size must_== p.words.size
     }
     "convert doc to docXML" in {
-      (converter.toXML \\ "page").toSeq.size must_== doc.pages.size
+      (converter.toXML \\ "pageFromXML").toSeq.size must_== doc.pages.size
     }
     "save xml to file" in {
       converter.toFile("docXMLTest.xml")

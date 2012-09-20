@@ -1,6 +1,6 @@
 package com.an_it.ocr
 
-import org.specs2.mutable.Specification
+import org.specs2.mutable.{SpecificationWithJUnit, Specification}
 
 /**
  * AN-iT
