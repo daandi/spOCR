@@ -24,8 +24,9 @@ case class Word(
 
 object Word {
 
-  def fromHOCR( html : xml.Node,  enclosingPageNumber: Int = 0) = {
+  def fromHOCR( html : xml.Node,  enclosingPageNumber: Int = 0) =
     new Word(Element.extractCoordinates(html), html.text, enclosingPageNumber, Element.fontFeaturesFromHTML(html))
-  }
+
+  //def fromAbbyyXML( xml : xml.Node, enclosingPageNumber: Int = 0 ) : Word = Word
 
 }
