@@ -13,9 +13,10 @@ import com.an_it.ocr.{Line, Page, Word, Document}
  */
 
 class DocXMLSpec extends Specification{
-  val doc = new Document(
-    Document.fromFolder( getClass.getResource("/testdoc/hocr/").getFile ).pages.slice(0,10)
-  )
+  val folder = getClass.getResource("/doc/hocr").getFile
+  println(folder)
+  val doc =  Document.fromFolder(folder)
+
   val converter = new DocXML(doc)
 
   "DocXML" should {

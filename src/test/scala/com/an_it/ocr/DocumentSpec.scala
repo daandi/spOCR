@@ -18,27 +18,23 @@ class DocumentSpec extends Specification{
   args.report(showtimes = true )
 
   "A Document" should {
-   val d = Document.fromFolder(getClass.getResource("/testdoc/hocr/").getFile)
+   val d = Document.fromFolder(getClass.getResource("/doc/hocr/").getFile)
    "add all Pages from Files in a given folder" in {
-     Document.fromFolder(getClass.getResource("/testdoc/hocr/").getFile).length shouldEqual  272
+     Document.fromFolder(getClass.getResource("/doc/hocr/").getFile).length shouldEqual  2
    }
    "access page by applying an int to Document" in {
-     d(59).pageNumber shouldEqual  60
+     d(0).pageNumber shouldEqual  5
    }
    "have a method to get Page by pageNumber" in {
-     d.getPage(5).pageNumber shouldEqual 5
+     d.getPage(8).pageNumber shouldEqual 8
    }
   }
-  "A document from real Path" should {
-    Document.fromFolder("/Users/andi/Promotion/woerterbuecher/bsb10230264/hocr")
-    pending
-  }
   "Iterating over a document" should {
-     val exampleDoc = Document.fromFolder(getClass.getResource("/testdoc/hocr/").getFile)
+     val exampleDoc = Document.fromFolder(getClass.getResource("/doc/hocr/").getFile)
      "per page" in {
         val pageNumbers = exampleDoc map (p => p.pageNumber)
-        pageNumbers.head shouldEqual 1
-        pageNumbers.last shouldEqual 272
+        pageNumbers.head shouldEqual 5
+        pageNumbers.last shouldEqual 8
      }
      "changing values in an iteration should persist" in {
        exampleDoc.words foreach (_.nextWordDistance = Some(0))
@@ -47,10 +43,10 @@ class DocumentSpec extends Specification{
        exampleDoc.words(0).nextWordDistance shouldEqual Some(42)
      }
      "per line" in {
-       exampleDoc.lines.size shouldEqual  11114
+       exampleDoc.lines.size shouldEqual  78
      }
      "per word" in {
-       exampleDoc.words.size shouldEqual 99423
+       exampleDoc.words.size shouldEqual 725
      }
 
    }

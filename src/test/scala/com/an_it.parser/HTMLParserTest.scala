@@ -18,18 +18,17 @@ class HTMLParserTest extends Specification {
 
   "The HTMLParser" should {
     "allow to parse WebPages as XML when an URL is given" in new initParser {
-      val html = parser.fromURL("http://www.an-it.com")
-      (html \\ "h1" ).text.must_==("Andreas Neuman IT - AN-iT")
+
+      (fromURL("http://www.an-it.com") \\ "h1" ).text.must_==("Andreas Neuman IT - AN-iT")
     }
     "parse HTML in Files as if working with XML" in new initParser {
-      val file =  getClass.getResource("/test.html").getFile
-      val html = parser.fromFile( file )
-      (html \\ "div" \\ "@title").head.text must_== "bbox 0 0 1326 1326;ppageno 33"
+      val file =  getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.html").getFile
+      val html = fromFile( file )
+      (html \\ "div" \\ "@title").head.text must_== "bbox 0 0 1709 1709;ppageno 8"
     }
   }
 
+  trait initParser extends HTMLParser with Scope
+
 }
 
-trait initParser extends Scope {
-  lazy val parser = new HTMLParser
-}
