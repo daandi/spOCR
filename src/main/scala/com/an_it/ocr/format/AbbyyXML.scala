@@ -11,8 +11,8 @@ object AbbyyXML {
   )
 
   def pageFromXML(xml: NodeSeq) : Page = new Page(
-    pageNumber(xml \ "page"),
-    extractCoordinatesFromXML(xml \ "page"),
+    0,
+    pageCoordiantesFromXML(xml \\ "page"),
     (xml \\ "line").toIndexedSeq map lineFromXML
   )
 
@@ -45,6 +45,13 @@ object AbbyyXML {
     val bottom = xml \ "@b" text
 
     ((left toInt, top toInt),(right toInt, bottom toInt))
+  }
+
+  def pageCoordiantesFromXML(xml: NodeSeq) = {
+    val width = xml \ "@width" text
+    val height = xml \ "@height" text
+
+    ((0,0),(width toInt,height toInt))
   }
 
 
