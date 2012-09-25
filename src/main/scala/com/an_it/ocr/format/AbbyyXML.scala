@@ -10,7 +10,7 @@ object AbbyyXML {
      (xml \\ "page").toIndexedSeq map pageFromXML
   )
 
-  def pageFromXML(xml: NodeSeq) : Page = new Page(
+  def pageFromXML(xml: NodeSeq) : Page = Page(
     0,
     pageCoordiantesFromXML(xml \\ "page"),
     (xml \\ "block").toIndexedSeq map blockFromXML   //TODO
@@ -18,7 +18,7 @@ object AbbyyXML {
 
   def blockFromXML(xml: NodeSeq) : Block = Block(
     extractCoordinatesFromXML(xml),
-    IndexedSeq.empty[Paragraph]
+    (xml \\ "line").toIndexedSeq map lineFromXML
   )
 
   def lineFromXML(xml: NodeSeq) = Line(

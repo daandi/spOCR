@@ -69,6 +69,8 @@ class AbbyyXMLSpec extends Specification {
                                                                    |treibende zn bestrette^
                                                                    |mm""".stripMargin
     }
+
+
     "construct a Line from given XML" in {
       AbbyyXML.lineFromXML( xml \\ "line" head).toText mustEqual """§a        Entste h ung der M a L e r i e."""
     }

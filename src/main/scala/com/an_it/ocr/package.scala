@@ -10,7 +10,6 @@ package com.an_it
 package object ocr {
   type Pages = IndexedSeq[Page]
   type Blocks = IndexedSeq[Block]
-  type Paragraphs = IndexedSeq[Paragraph]
   type Lines = IndexedSeq[Line]
   type Words = IndexedSeq[Word]
   type Coordinates = ((Int,Int),(Int,Int))

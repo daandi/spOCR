@@ -74,17 +74,11 @@ object HOCR {
   def blocksFromHTML(html: NodeSeq) : Blocks = (html \ "div") map blockFromHTML toIndexedSeq
   def blockFromHTML(html: NodeSeq) : Block = Block(
     extractCoordinates(html),
-    paragraphsFromHTML(html)
-  )
-
-
-  def paragraphsFromHTML(html: NodeSeq) : Paragraphs = (html \ "p") map paragraphFromHTML toIndexedSeq
-  def paragraphFromHTML(html: NodeSeq) : Paragraph = Paragraph(
-    extractCoordinates(html),
     linesFromHTML(html)
   )
 
-  def linesFromHTML(html: NodeSeq) : Lines = (html \ "span") map lineFromHTML toIndexedSeq
+
+  def linesFromHTML(html: NodeSeq) : Lines = (html \ "p" \ "span") map lineFromHTML toIndexedSeq
   def lineFromHTML(html : NodeSeq) = Line(
     extractCoordinates(html),
     buildWordSeq(html)

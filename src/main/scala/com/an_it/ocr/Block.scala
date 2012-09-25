@@ -9,11 +9,9 @@ package com.an_it.ocr
  */
 case class Block(
   coordinates: Coordinates,
-  paragraphs: Paragraphs,
+  lines: Lines,
   enclosingPageNumber : Option[Int] = None
  ) extends Element{
-
-  def lines : Lines = paragraphs flatMap (_.lines)
   def words : Words = lines flatMap(_.words)
 
 }
