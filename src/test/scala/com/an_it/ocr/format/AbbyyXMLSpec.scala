@@ -74,7 +74,7 @@ class AbbyyXMLSpec extends Specification {
 
 
     "construct a Line from given XML" in {
-      AbbyyXML.lineFromXML( xml \\ "line" head)( ((0,0),(5000,5000))).toText mustEqual """§a Entste h ung der M a L e r i e."""
+      AbbyyXML.lineFromXML( xml \\ "line" head).toText mustEqual """§a Entste h ung der M a L e r i e."""
     }
     "get coordinates from XML Seq" in {
       AbbyyXML.extractCoordinatesFromXML(

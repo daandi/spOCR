@@ -12,7 +12,7 @@ object AbbyyXML {
 
   def pageFromXML(xml: NodeSeq) : Page = {
     val pageCoords = pageCoordiantesFromXML(xml \\ "page")
-    val blocks : Blocks =  (xml \\ "block").toIndexedSeq map blockFromXML map(_(pageCoords))
+    val blocks : Blocks =  (xml \\ "block").toIndexedSeq map blockFromXML
     Page(
       0,
      pageCoords,
@@ -20,15 +20,13 @@ object AbbyyXML {
     )
   }
 
-  def blockFromXML(xml: NodeSeq)(pageCoords: Coordinates) : Block = {
-    val lines =  (xml \\ "line").toIndexedSeq map lineFromXML map (_(pageCoords))
-    Block(
+  def blockFromXML(xml: NodeSeq) : Block = Block(
       extractCoordinatesFromXML(xml),
-      lines
+      (xml \\ "line").toIndexedSeq map lineFromXML
     )
-  }
 
-  def lineFromXML(xml: NodeSeq)(pageCoords: Coordinates) = Line(
+
+  def lineFromXML(xml: NodeSeq) = Line(
     extractCoordinatesFromXML(xml),
     wordsFromChars( List.empty[Option[Word]],List.empty[NodeSeq],(xml \\ "charParams") toList).flatten toIndexedSeq
   )
