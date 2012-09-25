@@ -23,13 +23,13 @@ object AbbyyXML {
   def blockFromXML(xml: NodeSeq)(pageCoords: Coordinates) : Block = {
     val lines =  (xml \\ "line").toIndexedSeq map lineFromXML map (_(pageCoords))
     Block(
-      normalize( extractCoordinatesFromXML(xml) , pageCoords),
+      extractCoordinatesFromXML(xml),
       lines
     )
   }
 
   def lineFromXML(xml: NodeSeq)(pageCoords: Coordinates) = Line(
-    normalize(extractCoordinatesFromXML(xml),pageCoords),
+    extractCoordinatesFromXML(xml),
     wordsFromChars( List.empty[Option[Word]],List.empty[NodeSeq],(xml \\ "charParams") toList).flatten toIndexedSeq
   )
 
@@ -71,8 +71,8 @@ object AbbyyXML {
     val ((leftDistance,topDistance),(rightDistance,bottomDistance)) = coords
     val (_, (pageWidth, pageHeight)) =  pageCoords
 
-    val right = leftDistance + (pageWidth - rightDistance -leftDistance)
-    val bottom = topDistance - (pageHeight - bottomDistance - topDistance)
+    val right = leftDistance + pageWidth - rightDistance - leftDistance
+    val bottom = topDistance+ pageHeight - bottomDistance - topDistance
 
     ((leftDistance, topDistance),(right, bottom))
   }
