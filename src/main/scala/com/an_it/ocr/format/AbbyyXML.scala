@@ -10,47 +10,74 @@ object AbbyyXML {
      (xml \\ "page").toIndexedSeq map pageFromXML
   )
 
-  def pageFromXML(xml: NodeSeq) : Page = Page(
-    0,
-    pageCoordiantesFromXML(xml \\ "page"),
-    (xml \\ "block").toIndexedSeq map blockFromXML   //TODO
+  def pageFromXML(xml: NodeSeq) : Page = {
+    val pageCoords = pageCoordiantesFromXML(xml \\ "page")
+    val blocks : Blocks =  (xml \\ "block").toIndexedSeq map blockFromXML map(_(pageCoords))
+    Page(
+      0,
+     pageCoords,
+     blocks
+    )
+  }
+
+  def blockFromXML(xml: NodeSeq)(pageCoords: Coordinates) : Block = {
+    val lines =  (xml \\ "line").toIndexedSeq map lineFromXML map (_(pageCoords))
+    Block(
+      normalize( extractCoordinatesFromXML(xml) , pageCoords),
+      lines
+    )
+  }
+
+  def lineFromXML(xml: NodeSeq)(pageCoords: Coordinates) = Line(
+    normalize(extractCoordinatesFromXML(xml),pageCoords),
+    wordsFromChars( List.empty[Option[Word]],List.empty[NodeSeq],(xml \\ "charParams") toList).flatten toIndexedSeq
   )
 
-  def blockFromXML(xml: NodeSeq) : Block = Block(
-    extractCoordinatesFromXML(xml),
-    (xml \\ "line").toIndexedSeq map lineFromXML
-  )
-
-  def lineFromXML(xml: NodeSeq) = Line(
-    extractCoordinatesFromXML(xml),
-    wordsFromChars( List.empty[Word],List.empty[NodeSeq],(xml \\ "charParams") toList) toIndexedSeq
-  )
-
-  def wordsFromChars(words: List[Word] , wordChars: List[NodeSeq], chars: List[NodeSeq]) : List[Word] = chars match {
+  def wordsFromChars(words: List[Option[Word]] , wordChars: List[NodeSeq], chars: List[NodeSeq]) : List[Option[Word]] = chars match {
     case Nil => wordFromXML(wordChars) :: words reverse
     case c :: rest if c.text == " " => wordsFromChars( wordFromXML(wordChars) :: words, List.empty[NodeSeq], rest )
     case c :: rest => wordsFromChars(words, c :: wordChars, rest)
   }
 
 
-  def wordFromXML(nodes: List[NodeSeq]) = {
-    val coords = ((0,0),(0,0))
-    Word(coords, nodes.reverse.foldLeft("")(_ + _.text) )
+  def wordFromXML(chars: List[NodeSeq]) : Option[Word] = chars match {
+    case Nil => None
+    case nodes => {
+      val left = (nodes.last \ "@l").text.toInt
+      val right = (nodes.head \ "@r").text.toInt
+      val top = (nodes.last \ "@t").text.toInt
+      val bottom = (nodes.last \ "@b").text.toInt
+
+
+      Some(Word(((left,top),(right,bottom)), nodes.reverse.foldLeft("")(_ + _.text) ))
+    }
   }
 
   def pageNumber(xml: NodeSeq) : Int =  0
 
-
-  // Normalisieren !
   def extractCoordinatesFromXML(xml: NodeSeq) = {
-    val left = xml \ "@l" text
-    val top = xml \ "@t" text
+    val leftDistance = (xml \ "@l").text.toInt
+    val topDistance = (xml \ "@t").text.toInt
 
-    val right = xml \ "@r" text
-    val bottom = xml \ "@b" text
+    val rightDistance = (xml \ "@r").text.toInt
+    val bottomDistance = (xml \ "@b").text.toInt
 
-    ((left toInt, top toInt),(right toInt, bottom toInt))
+    ((leftDistance,topDistance),(rightDistance,bottomDistance))
+
+
   }
+
+  def normalize(coords: Coordinates, pageCoords: Coordinates) : Coordinates = {
+    val ((leftDistance,topDistance),(rightDistance,bottomDistance)) = coords
+    val (_, (pageWidth, pageHeight)) =  pageCoords
+
+    val right = leftDistance + (pageWidth - rightDistance -leftDistance)
+    val bottom = topDistance - (pageHeight - bottomDistance - topDistance)
+
+    ((leftDistance, topDistance),(right, bottom))
+  }
+
+
 
   def pageCoordiantesFromXML(xml: NodeSeq) = {
     val width = xml \ "@width" text

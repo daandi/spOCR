@@ -56,7 +56,7 @@ class PageSpec extends Specification {
     "given an imagePath toHTML should create an HTML on an image " in new parsedText with temporaryHTMLView{
       val img = getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath
       val f = examplePage.copy(imgPath= Some(img))
-      savePageToFile(f.toHTML ,"test_new.html")
+      savePageToFile(f.toHTML ,"test_abby.html")
       pending
     }
   }

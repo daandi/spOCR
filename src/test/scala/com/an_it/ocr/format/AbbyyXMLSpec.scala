@@ -2,6 +2,8 @@ package com.an_it.ocr.format
 
 import org.specs2.mutable.Specification
 import xml.XML
+import com.an_it.ocr.temporaryHTMLView
+import org.specs2.specification.Scope
 
 
 class AbbyyXMLSpec extends Specification {
@@ -10,10 +12,10 @@ class AbbyyXMLSpec extends Specification {
     val xml = XML.load( getClass.getResourceAsStream("/abbyy_xml_example.xml"))
 
     "construct a Document from given XML" in {
-      AbbyyXML.documentFromXML(xml).pages map (_.toText.size) mustEqual IndexedSeq(2239)
+      AbbyyXML.documentFromXML(xml).pages map (_.toText.size) mustEqual IndexedSeq(2215)
     }
     "construct a Page from given XML" in {
-      AbbyyXML.pageFromXML( xml \\ "page" head).toText mustEqual """§a        Entste h ung der M a L e r i e.
+      AbbyyXML.pageFromXML( xml \\ "page" head).toText mustEqual """§a Entste h ung der M a L e r i e.
                                                                    |und Empfindung seiner Wirkungen als Eigen-
                                                                    |thum gegeben char.
                                                                    |Aus dieser allmächtigen Quelle siud auch
@@ -24,15 +26,15 @@ class AbbyyXMLSpec extends Specification {
                                                                    |Krauchte;^ Sie haben der in sie wirkenden Ur-
                                                                    |kraft widerstanden, und find von ihr geschie-
                                                                    |Den worden.
-                                                                   |~- ■'       ii>'   '  ■ •
+                                                                   |~- ■' ii>' ' ■ •
                                                                    |. Wenn wir Wchdenken wollen , auf was
                                                                    |Art zwei elastische/Krafte einander, widerstehen,
                                                                    |so finden wir,. daß es durch eine Ausdehnung
-                                                                   |der einen /  und durch die Verengerung der an-
+                                                                   |der einen / und durch die Verengerung der an-
                                                                    |dern geschehen müsset zumal wenn leztere die
-                                                                   |erste in sich faßt.   Aus diesen beiden Vermögen
+                                                                   |erste in sich faßt. Aus diesen beiden Vermögen
                                                                    |besteht Mtch wirklich die WaUcitat, . das Urwe-,
-                                                                   |fin im Mwegung. —   Die zmn Widerstände
+                                                                   |fin im Mwegung. — Die zmn Widerstände
                                                                    |MMauchte elaWsche Waft^verwandeltL sich also
                                                                    |in eine mächtige Ausdehnung ihrer selbst undl
                                                                    |mußte durch ein aus der göttlichen Kraft aus»
@@ -41,7 +43,7 @@ class AbbyyXMLSpec extends Specification {
                                                                    |? Dieß gab aber nur eine einige Form die
                                                                    |erste und größte — einen Kreis; — den Grund-
                                                                    |tß aller andern; Denn jede Form, «nd was
-                                                                   |0    : wir
+                                                                   |0 : wir
                                                                    |/Entstehung der Materle.
                                                                    |wir in der körperlichen Welt wahrnehmen, ist
                                                                    |mit krummen Linien umschlossen; es kann also
@@ -72,16 +74,30 @@ class AbbyyXMLSpec extends Specification {
 
 
     "construct a Line from given XML" in {
-      AbbyyXML.lineFromXML( xml \\ "line" head).toText mustEqual """§a        Entste h ung der M a L e r i e."""
+      AbbyyXML.lineFromXML( xml \\ "line" head)( ((0,0),(5000,5000))).toText mustEqual """§a Entste h ung der M a L e r i e."""
     }
     "get coordinates from XML Seq" in {
       AbbyyXML.extractCoordinatesFromXML(
-        <line baseline="505" l="1155" t="427" r="2535" b="518"></line>
-      ) mustEqual ((1155,427),(2535,518))
+        <line baseline="505" l="1155" t="427" r="2535" b="518"></line>) mustEqual ((1155,427),(2535,518))
 
     }
 
+    "given an imagePath toHTML should create an HTML on an image " in new temporaryHTMLView with exampleDoc{
+      val img = getClass.getResource("/abbyy_xml_example.png").getFile
+      savePageToFile(page.copy(imgPath = Some(img)).toHTML ,"test_abbyy_new.html")
+      pending
+    }
+
+
+
   }
+
+  trait exampleDoc extends Scope {
+    val doc = AbbyyXML.documentFromXML(XML.load( getClass.getResourceAsStream("/abbyy_xml_example.xml")))
+    val page = doc.pages head
+  }
+
+
 
 
 }
