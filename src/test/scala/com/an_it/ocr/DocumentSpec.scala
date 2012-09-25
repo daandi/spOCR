@@ -1,7 +1,7 @@
 package com.an_it.ocr
 
 import format.HOCR
-import org.specs2.mutable.Specification
+import org.specs2.mutable.{SpecificationWithJUnit, Specification}
 import org.specs2.specification.Scope
 
 /**

@@ -1,6 +1,7 @@
 package com.an_it.ocr.format
 
 import org.specs2.mutable.Specification
+import com.an_it.ocr.{Word, Line, Paragraph, Block}
 
 /**
  * Smarchive GmbH
@@ -15,6 +16,39 @@ class HOCRSpec extends Specification{
     "extract PageNumber from imageFilePath" in {
       HOCR.getPageNumberFromImagePath("blibblub_000001.jpg") shouldEqual 1
       HOCR.getPageNumberFromImagePath("blibblub_000025.png") shouldEqual 25
+    }
+  }
+
+  "HOCR Block" should {
+    "be created frtom HTML" in {
+      val html =
+        <div class="ocrx_block" title="bbox 0 111 1472 2270">
+          <p class="ocr_par"  title="bbox 174 4 916 38" align="Justified" leftIndent="100" startIndent="1900" lineSpacing="1056">
+            <span class="ocr_line" baseline="249"  title="bbox 264 216 1462 256">
+              <span class="ocrx_word" title="bbox 264 216 333 248">Den</span>
+                <span class="ocrx_word" title="bbox 356 216 402 248">20.</span>
+                <span class="ocrx_word" title="bbox 426 216 620 249">Novembris</span>
+              </span>
+            </p>
+          </div>
+
+
+
+          HOCR.blockFromHTML(html).words.size mustEqual 3
+    }
+  }
+  "HOCR Paragraph" should {
+    "be created from HTML" in {
+      HOCR.paragraphFromHTML(<p class="ocr_par" title="bbox 174 4 916 38" align="Justified" leftIndent="100" startIndent="1900" lineSpacing="1056">
+        <span class="ocr_line" baseline="249"  title="bbox 264 216 1462 256">
+          <span class="ocrx_word" title="bbox 264 216 333 248">Den</span>
+          <span class="ocrx_word" title="bbox 356 216 402 248">20.</span>
+          <span class="ocrx_word" title="bbox 426 216 620 249">Novembris</span>
+          <span class="ocrx_word" title="bbox 643 218 698 249">bin</span>
+          <span class="ocrx_word" title="bbox 720 218 758 256">ich</span>
+          <span class="ocrx_word" title="bbox 781 217 917 248">widrum</span>
+        </span>
+      </p>).words.size mustEqual 6
     }
   }
 

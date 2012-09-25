@@ -12,16 +12,15 @@ import xml.NodeSeq
  */
 
 case class Line(
-                 coordinates: ((Int, Int),(Int, Int)),
-                 val words: IndexedSeq[Word],
-                 val enclosingPageNumber: Option[Int] = None,
-                 val fontFeatures: Option[List[Symbol]] = None
+                 coordinates: Coordinates,
+                 val words: Words,
+                 val enclosingPageNumber: Option[Int] = None
                  ) extends Element with IndexedSeq[Word]{
   def toText: String = words.map(_.text).mkString(" ")
 
   def toHTML(zoom: Double = 1) : NodeSeq =
-    <span class= {"OCRLine"} style={toCSS(zoom)}></span> ++
-      words flatMap(_.toHTML).reduce(_ ++ _)
+    <span class={"OCRLine"} style={toCSS(zoom)} ></span> ++
+      words.flatMap(_.toHTML())
 
   def length = words.length
 

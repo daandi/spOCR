@@ -19,15 +19,14 @@ object HOCR {
 
   def extractOCRClass(html: NodeSeq) =  Symbol( (html \ "@class" ).text)
 
-  def extractCoordinates(html: NodeSeq) : ( (Int, Int), (Int, Int) )= {
+  def extractCoordinates(html: NodeSeq) : Coordinates = {
     (html \ "@title").text match {
       case coordinatesExtractor(x1,y1,x2,y2) => ( (x1.toInt, y1.toInt ),(x2.toInt, y2.toInt) )
       case e => throw new Exception("No valid coordiantes string in" + e)
     }
   }
 
-
-  //val pageNumberExtractor = """[^_]+_(?:0)*(\d+).*""".r
+  val pagePathNumberExtractor = """[^_]+_(?:0)*(\d+).*""".r
   val pageNumberExtractor = """[^;]+;ppageno\s*(\d+)""".r
 
   def fromFolder(path: String)  =  new Document(pagesFromFolder(path))
@@ -50,7 +49,7 @@ object HOCR {
   }
 
   def getPageNumberFromImagePath(imagePath : String) : Int = imagePath match {
-    case pageNumberExtractor(pageNumber) =>  pageNumber.toInt
+    case pagePathNumberExtractor(pageNumber) =>  pageNumber.toInt
     case malformed => throw new Error("Konnte Bilddatei: " + malformed +" keine Seite zuordnen: ");
   }
 
@@ -94,7 +93,7 @@ object HOCR {
   def isOCRWord(html : NodeSeq) = extractOCRClass(html) == 'ocrx_word
 
   def buildWordSeq(html: NodeSeq) : Words =
-    html filter isOCRWord  map {w => new Word(extractCoordinates(w),w text) } toIndexedSeq
+    (html \ "span") filter isOCRWord  map {w => new Word(extractCoordinates(w),w text) } toIndexedSeq
 
   def wordfromHTML( html : xml.Node,  enclosingPageNumber: Int = 0) =
     new Word(extractCoordinates(html), html.text, Some(enclosingPageNumber))

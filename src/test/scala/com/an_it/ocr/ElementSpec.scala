@@ -18,7 +18,7 @@ class ElementSpec extends Specification {
           def toHTML(zoom:Double) = <html></html>
           val coordinates = ((1,2),(3,4))
           val enclosingPage = 0
-          val enclosingPageNumber = 0
+          val enclosingPageNumber = Some(0)
           val fontFeatures = None
     }
   }

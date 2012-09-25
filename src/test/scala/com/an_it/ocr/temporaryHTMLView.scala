@@ -14,7 +14,7 @@ import xml.NodeSeq
 
 trait temporaryHTMLView {
  
-  def savePageToFile(html: NodeSeq,  f : String)(implicit zoom: Double = 1) {
+  def savePageToFile(html: NodeSeq,  f : String) {
 
    val htmlNodes = <html>
           <head><link href="test.css" rel="stylesheet" type="text/css"></link></head>

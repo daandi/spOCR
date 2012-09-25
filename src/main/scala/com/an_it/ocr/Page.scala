@@ -15,10 +15,10 @@ import collection.mutable.ListBuffer
  * Package: com.an_it.ocr
  */
 
-class Page( val pageNumber: Int,
-            val coordinates: Coordinates,
-            val blocks: Blocks,
-            val imgPath : Option[String] = None
+case class Page(pageNumber: Int,
+           coordinates: Coordinates,
+            blocks: Blocks,
+            imgPath : Option[String] = None
             ) extends Element  {
 
   def words : Words  = blocks flatMap( _ words)
