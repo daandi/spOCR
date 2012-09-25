@@ -13,7 +13,12 @@ object AbbyyXML {
   def pageFromXML(xml: NodeSeq) : Page = new Page(
     0,
     pageCoordiantesFromXML(xml \\ "page"),
-    (xml \\ "line").toIndexedSeq map lineFromXML
+    (xml \\ "block").toIndexedSeq map blockFromXML   //TODO
+  )
+
+  def blockFromXML(xml: NodeSeq) : Block = Block(
+    extractCoordinatesFromXML(xml),
+    IndexedSeq.empty[Paragraph]
   )
 
   def lineFromXML(xml: NodeSeq) = Line(

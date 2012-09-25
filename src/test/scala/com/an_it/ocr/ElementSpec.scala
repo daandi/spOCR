@@ -12,24 +12,6 @@ import org.specs2.mutable.Specification
  */
 
 class ElementSpec extends Specification {
-  "Element" should {
-
-    "have a featuresDataAttribute Method" in new tE{
-      testElement.featuresDataAttribute shouldEqual "{}"
-      testElement.addFeature(("test", 5))
-      testElement.addFeature(("confidence","none"))
-      testElement.featuresDataAttribute shouldEqual "{\"test\" : 5, \"confidence\" : \"none\"}"
-    }
-  }
-
-  "Element companion object" should {
-    "have a method to extract font-style from hocr" in {
-       Element.extractFontFeatures("""font-size:8pt;font-family:"Times New Roman";font-style:"bold italic";"""") shouldEqual Some( List(Symbol("8pt"), 'TimesNewRoman, 'bold, 'italic))
-    }
-    "also from html" in {
-      Element.fontFeaturesFromHTML(<span class="ocrx_word" title="bbox 1216 1245 1354 1269" style="font-size:8pt;font-family:'Times New Roman';font-style:bold" >Schiste</span>) shouldEqual Some(List(Symbol("8pt"), 'TimesNewRoman))
-    }
-  }
 
   trait tE extends org.specs2.specification.Scope {
     val testElement = new Element{

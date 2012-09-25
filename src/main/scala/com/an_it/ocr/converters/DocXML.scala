@@ -18,7 +18,7 @@ class DocXML(doc: Document) {
 
 
   def pageToXML(p: Page) : Node =
-  <page imageFile={p.imagePath.getOrElse("")} sourceFile="">
+  <page imageFile={p.imgPath.getOrElse("")} sourceFile="">
     {(p.words zipWithIndex).map {case (word,idx) => toTokenXML(word,idx,p)} }
   </page>
 

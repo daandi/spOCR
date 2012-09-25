@@ -12,21 +12,10 @@ import xml.NodeSeq
  */
 
 case class Word(
-                 coordinates: ((Int,Int),(Int, Int)),
+                 coordinates: Coordinates,
                  text : String,
-                 val enclosingPageNumber: Int = 0,
-                 val fontFeatures: Option[List[Symbol]] = None) extends Element {
-  var nextWordDistance : Option[Int]  = None
+                 val enclosingPageNumber: Option[Int] = None) extends Element {
 
   def toHTML(zoom: Double = 1) : NodeSeq =
-    <span class={"OCRWord"} data-text={text} data-features={featuresDataAttribute} style={ toCSS(zoom) }>{}</span>
-}
-
-object Word {
-
-  def fromHOCR( html : xml.Node,  enclosingPageNumber: Int = 0) =
-    new Word(Element.extractCoordinates(html), html.text, enclosingPageNumber, Element.fontFeaturesFromHTML(html))
-
-  //def fromAbbyyXML( xml : xml.Node, enclosingPageNumber: Int = 0 ) : Word = Word
-
+    <span class={"OCRWord"} data-text={text} style={ toCSS(zoom) }>{}</span>
 }

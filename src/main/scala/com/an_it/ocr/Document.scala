@@ -16,61 +16,22 @@ import com.an_it.HTMLParser
 import java.io.File
 import collection.parallel.mutable.ParArray
 
-class Document( val pages : IndexedSeq[Page] )
+class Document( val pages : Pages )
   extends IndexedSeq[Page] {
 
   lazy val pageNumberMapping : Map[Int,Page] = pages map  {page => Map(page.pageNumber -> page)}  reduce  (_ ++ _)
 
   def length = pages.size
-  def apply(idx: Int) : Page = pages.apply(idx)
+  def apply(idx: Int) : Page = pages(idx)
   def getPage(pageNumber : Int)  = pageNumberMapping(pageNumber)
 
-  def lines : IndexedSeq[Line] = pages map(_.lines) reduceLeft (_ ++ _)
-  def words : IndexedSeq[Word] = lines.par.map(_.words).reduce(_ ++ _)
+  def lines : IndexedSeq[Line] = pages flatMap(_ lines)
+  def words : IndexedSeq[Word] = lines flatMap(_ words)
 
-  def toHTML = pages map {_.toHTML } reduce (_ ++ _)
+  def toHTML = pages flatMap {_.toHTML }
 
   def createPagesHash( pages : ParArray[Page] ) : Map[Int,Page] =
       (Map[Int, Page]() /: pages) { case (partialPageHash,page) => partialPageHash ++ Map(page.pageNumber -> page) }
 
 }
 
-object Document {
-
-  val pageNumberExtractor = """[^_]+_(?:0)*(\d+).*""".r
-  
-  def fromFolder(path: String)  =  new Document(pagesFromFolder(path))
-  def fromFolderWithImage(path: String, imageFolder: String) =
-    docWithImages(new Document(pagesFromFolder(path)), imageFolder)
-
-  def docWithImages(doc: Document, imageFolder: String) = {
-    val imageFiles = new File(imageFolder).listFiles.filter(_.toString.endsWith(".jpg"))
-    imageFiles.par foreach { imageFile =>
-      val pageNumber = getPageNumberFromImagePath(imageFile.toString).toInt
-      try {
-        doc.getPage( pageNumber ).imagePath = Some(imageFile.toString)
-      }
-      catch {
-        case e => println("something went wrong while adding image to pageFromXML" + e  )
-      }
-    }
-    doc
-  }
-
-  def getPageNumberFromImagePath(imagePath : String) : Int = imagePath match {
-        case pageNumberExtractor(pageNumber) =>  pageNumber.toInt
-        case malformed => throw new Error("Konnte Bilddatei: " + malformed +" keine Seite zuordnen: ");
-  }
-
-  def pagesFromFolder(folderPath: String) : IndexedSeq[Page]= {
-    val files = new File(folderPath).listFiles
-    files map (pageFromFile(_))
-  }
-
-
-  def pageFromFile(file : File) : Page = Page fromHTML( new HTMLParser().fromFile(file) )
-
-  
-  implicit def stringToFile(in: String) : File = new File(in)
-
-}

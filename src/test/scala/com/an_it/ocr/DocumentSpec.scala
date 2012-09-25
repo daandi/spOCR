@@ -1,5 +1,6 @@
 package com.an_it.ocr
 
+import format.HOCR
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 
@@ -18,9 +19,9 @@ class DocumentSpec extends Specification{
   args.report(showtimes = true )
 
   "A Document" should {
-   val d = Document.fromFolder(getClass.getResource("/doc/hocr/").getFile)
+   val d = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
    "add all Pages from Files in a given folder" in {
-     Document.fromFolder(getClass.getResource("/doc/hocr/").getFile).length shouldEqual  2
+     HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile).length shouldEqual  2
    }
    "access pageFromXML by applying an int to Document" in {
      d(0).pageNumber shouldEqual  5
@@ -30,18 +31,13 @@ class DocumentSpec extends Specification{
    }
   }
   "Iterating over a documentFromXML" should {
-     val exampleDoc = Document.fromFolder(getClass.getResource("/doc/hocr/").getFile)
+     val exampleDoc = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
      "per pageFromXML" in {
         val pageNumbers = exampleDoc map (p => p.pageNumber)
         pageNumbers.head shouldEqual 5
         pageNumbers.last shouldEqual 8
      }
-     "changing values in an iteration should persist" in {
-       exampleDoc.words foreach (_.nextWordDistance = Some(0))
-       exampleDoc.words(0).nextWordDistance shouldEqual Some(0)
-       exampleDoc.words foreach  (_.nextWordDistance = Some(42))
-       exampleDoc.words(0).nextWordDistance shouldEqual Some(42)
-     }
+
      "per lineFromXML" in {
        exampleDoc.lines.size shouldEqual  78
      }
@@ -51,10 +47,5 @@ class DocumentSpec extends Specification{
 
    }
 
-  "Document object" should {
-    "extract PageNumber from imageFilePath" in {
-      Document.getPageNumberFromImagePath("blibblub_000001.jpg") shouldEqual 1
-      Document.getPageNumberFromImagePath("blibblub_000025.png") shouldEqual 25
-    }
-  }
+
 }

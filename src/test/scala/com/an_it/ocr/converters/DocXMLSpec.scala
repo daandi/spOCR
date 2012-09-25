@@ -2,6 +2,7 @@ package com.an_it.ocr.converters
 
 import org.specs2.mutable.Specification
 import com.an_it.ocr.{Line, Page, Word, Document}
+import com.an_it.ocr.format.HOCR
 
 /**
  * AN-iT
@@ -15,14 +16,14 @@ import com.an_it.ocr.{Line, Page, Word, Document}
 class DocXMLSpec extends Specification{
   val folder = getClass.getResource("/doc/hocr").getFile
   println(folder)
-  val doc =  Document.fromFolder(folder)
+  val doc =  HOCR.fromFolder(folder)
 
   val converter = new DocXML(doc)
 
   "DocXML" should {
     "Convert an Word to a NodeSeq" in {
       val w = Word(((1,2),(3,4)),"test")
-      converter.toTokenXML(w,1,new Page(1,((0,0),(10,20)),IndexedSeq.empty[Line])) must beEqualToIgnoringSpace(
+      converter.toTokenXML(w,1,new Page(1,((0,0),(10,20)),IndexedSeq.empty[com.an_it.ocr.Block])) must beEqualToIgnoringSpace(
         <token token_id="1" isNormal="false">
           <wOCR>test</wOCR>
           <wOCR_lc>test</wOCR_lc>

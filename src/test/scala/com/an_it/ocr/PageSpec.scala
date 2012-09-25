@@ -1,5 +1,6 @@
 package com.an_it.ocr
 
+import format.HOCR
 import org.specs2.specification.Scope
 import com.an_it.HTMLParser
 import org.specs2.mutable.Specification
@@ -19,7 +20,7 @@ import java.io.PrintWriter
 class PageSpec extends Specification {
   "Page" should {
     "be created from HTML" in new parsedText{
-      Page.fromHTML(testHTML) shouldNotEqual null
+      HOCR.pageFromHTML(testHTML) shouldNotEqual null
     }
     "have a lineFromXML-iterator" in  new parsedText {
       examplePage.lines.toList(5).toText shouldEqual "1621, do bin gen Memmingen zogen, im Namen Gottes, mit Maifter"
@@ -31,7 +32,7 @@ class PageSpec extends Specification {
 
   "Helper methods" should  {
     "extract Page Number from title string" in {
-      Page.extractPageNumber(<div class='ocr_page' title='bbox 0 0 1326 1326;ppageno 33'></div>) shouldEqual 33
+      HOCR.extractPageNumber(<div class='ocr_page' title='bbox 0 0 1326 1326;ppageno 33'></div>) shouldEqual 33
     }
   }
 
@@ -52,15 +53,9 @@ class PageSpec extends Specification {
       (examplePage.toHTML \\ "span" ).filter(span => (span \\ "@class").text == "OCRLine").size shouldEqual 45
       (examplePage.toHTML \\ "span").filter(span => (span \\ "@class").text == "OCRWord").size shouldEqual 415
     }
-    "given an imagePath toHTML should create an HTML on an image" in new parsedText with temporaryHTMLView{
-      examplePage.imagePath = Some(getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath)
-      savePageToFile(examplePage.toHTML,"test.html")
-
-      pending
-    }
-    "given an imagePath toHTML should create an HTML on an image with image Propotions inferred" in new parsedText with temporaryHTMLView{
-      examplePage.imagePath = Some(getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath)
-      savePageToFile(examplePage.toHTML ,"test_inferred.html")
+    "given an imagePath toHTML should create an HTML on an image " in new parsedText with temporaryHTMLView{
+      val img = getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.jpg").getPath
+      savePageToFile(examplePage.copy(imgPath = Some(img)).toHTML ,"test_inferred.html")
       pending
     }
   }
@@ -68,7 +63,7 @@ class PageSpec extends Specification {
   trait parsedText extends Scope {
     val parser = new HTMLParser
     val testHTML = parser.fromFile( this.getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.html").getFile )
-    val examplePage = Page.fromHTML(testHTML)
+    val examplePage = HOCR.pageFromHTML(testHTML)
   }
 
 }

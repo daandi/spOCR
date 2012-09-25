@@ -24,7 +24,7 @@ class HTMLParserTest extends Specification {
     "parse HTML in Files as if working with XML" in new initParser {
       val file =  getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.html").getFile
       val html = fromFile( file )
-      (html \\ "div" \\ "@title").head.text must_== "bbox 0 0 1709 1709;ppageno 8"
+      (html \\ "div" \\ "@title").head.text must_== "bbox 0 0 1709 1709;ppageno 5"
     }
   }
 

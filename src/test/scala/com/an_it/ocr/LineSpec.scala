@@ -1,5 +1,6 @@
 package com.an_it.ocr
 
+import format.HOCR
 import org.specs2.mutable.{SpecificationWithJUnit, Specification}
 
 /**
@@ -13,11 +14,11 @@ import org.specs2.mutable.{SpecificationWithJUnit, Specification}
 
 class LineSpec extends Specification{
   "Line" should  {
-    "be created from HTML" in {
-      Line.fromHOCR(<span class="line" title="bbox 1 2 3 4"></span>) shouldEqual  new Line( ((1,2),(3,4)), IndexedSeq[Word]() )
+   "be created from HTML" in {
+      HOCR.lineFromHTML(<span class="line" title="bbox 1 2 3 4"></span>) shouldEqual  new Line( ((1,2),(3,4)), IndexedSeq[Word]() )
     }
     "be created from HTML with subElements" in {
-      Line.fromHOCR(
+      HOCR.lineFromHTML(
       <span class="line" title="bbox 1 2 3 4">
         <span class="ocrx_word" title="bbox 1 2 3 4">ein</span>
         <span class="ocrx_word" title="bbox 2 3 4 5">test</span>
@@ -31,7 +32,7 @@ class LineSpec extends Specification{
     }
   }
   "Display methods" should {
-    val exampleLine = Line.fromHOCR(
+    val exampleLine =HOCR.lineFromHTML(
       <span class='ocr_line' title='bbox 212 1537 1133 1578'>
         <span class='ocrx_word' title='bbox 212 1538 263 1565'>Ein</span>
         <span class='ocrx_word' title='bbox 283 1537 357 1565'>Leoit.</span>
