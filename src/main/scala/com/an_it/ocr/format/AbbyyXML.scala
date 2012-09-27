@@ -6,6 +6,8 @@ import xml.NodeSeq
 
 object AbbyyXML {
 
+  def documentFromFile(pathToFile: String) = documentFromXML(xml.XML.load(pathToFile))
+
   def documentFromXML(xml: NodeSeq) = new Document(
      (xml \\ "page").toIndexedSeq map pageFromXML
   )

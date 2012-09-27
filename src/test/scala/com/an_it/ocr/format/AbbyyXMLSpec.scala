@@ -11,6 +11,10 @@ class AbbyyXMLSpec extends Specification {
 
     val xml = XML.load( getClass.getResourceAsStream("/abbyy_xml_example.xml"))
 
+    "load a document from a file" in {
+      AbbyyXML.documentFromFile(getClass.getResource("/abbyy_xml_example.xml").getFile) mustEqual AbbyyXML.documentFromXML(xml)
+    }
+
     "construct a Document from given XML" in {
       AbbyyXML.documentFromXML(xml).pages map (_.toText.size) mustEqual IndexedSeq(2215)
     }
