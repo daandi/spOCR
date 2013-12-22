@@ -11,11 +11,11 @@ import xml.NodeSeq
  * Time: 12:36
  */
 
-case class Line(
-                 coordinates: Coordinates,
+case class Line( coordinates: Coordinates,
                  val words: Words,
                  val enclosingPageNumber: Option[Int] = None
-                 ) extends Element with IndexedSeq[Word]{
+               ) extends Element with IndexedSeq[Word]{
+
   def toText: String = words.map(_.text).mkString(" ")
 
   def toHTML(zoom: Double = 1) : NodeSeq =

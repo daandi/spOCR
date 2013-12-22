@@ -12,6 +12,6 @@ case class Block(
   lines: Lines,
   enclosingPageNumber : Option[Int] = None
  ) extends Element{
-  def words : Words = lines flatMap(_.words)
+  def words : Words = lines flatMap (_.words)
 
 }

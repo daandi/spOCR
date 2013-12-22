@@ -1,8 +1,8 @@
 package com.an_it.ocr
 
 import format.HOCR
-import org.specs2.mutable.Specification
-import org.specs2.specification.Scope
+import org.specs2.Specification
+
 /**
  * AN-iT
  * Andreas Neumann
@@ -12,25 +12,16 @@ import org.specs2.specification.Scope
  * Time: 13:31
  */
 
-class WordSpec extends Specification {
-  "Creates a wordFromXML" in {
-    val word = new Word(((1,2),(3,4)), "test", Some(0))
-    "Word" should  {
-      "have a getter for text" in {
-        word.text shouldEqual  "test"
-      }
-      "have Coordinates getter" in {
-        word.coordinates shouldEqual ((1,2),(3,4))
-      }
-    }
-    "from HTML" in {
-      HOCR.wordfromHTML(<span class='doesnt_matter' title="bbox 1 2 3 4">test</span>, 0) shouldEqual new Word(((1,2),(3,4)), "test",Some(0))
-    }
+class WordSpec extends Specification {def is= s2"""
+Creates a wordFromXML                                 ${ new Word(((1,2),(3,4)), "test", Some(0) ) must_== exampleWord }
+has a getter for text                                 ${ exampleWord.text shouldEqual  "test" }
+has Coordinates getter                                ${ exampleWord.coordinates shouldEqual ((1,2),(3,4))}
+can be created from HTML                              $fromHOCR
 
-    trait ew extends Scope{
-      val exampleWord = new Word(((1,2),(3,4)), "test", Some(0))
-    }
-  }
+"""
+
+lazy val exampleWord = new Word(((1,2),(3,4)), "test", Some(0))
+def fromHOCR = HOCR.wordfromHTML(<span class='doesnt_matter' title="bbox 1 2 3 4">test</span>, 0).
+  shouldEqual( new Word(((1,2),(3,4)), "test",Some(0)))
 
 }
-

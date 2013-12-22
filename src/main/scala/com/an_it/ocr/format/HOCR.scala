@@ -42,7 +42,7 @@ object HOCR {
         //doc.getPage( pageNumber ).imagePath = Some(imageFile.toString)
       }
       catch {
-        case e => println("something went wrong while adding image to pageFromXML" + e  )
+        case e: Throwable => println("something went wrong while adding image to pageFromXML" + e  )
       }
     }
     doc
