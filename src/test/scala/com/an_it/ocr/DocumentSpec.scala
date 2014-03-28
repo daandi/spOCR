@@ -24,8 +24,9 @@ class DocumentSpec extends Specification{
      HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile).length shouldEqual  2
    }
    "access pageFromXML by applying an int to Document" in {
-     d(0).pageNumber shouldEqual  5
-   }.pending
+     pending
+     //d(0).pageNumber shouldEqual  5
+   }
    "have a method to get Page by pageNumber" in {
      d.getPage(8).pageNumber shouldEqual 8
    }
