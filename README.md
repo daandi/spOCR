@@ -138,6 +138,6 @@ For hOCR
 ```scala
 "A Document" should {
    val d = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
-``
+```
 
 https://www.codeship.io/projects/cea760a0-987b-0131-a0a9-6efb656965ef/status

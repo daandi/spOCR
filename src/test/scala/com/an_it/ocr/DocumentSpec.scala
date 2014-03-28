@@ -25,7 +25,7 @@ class DocumentSpec extends Specification{
    }
    "access pageFromXML by applying an int to Document" in {
      d(0).pageNumber shouldEqual  5
-   }
+   }.pending
    "have a method to get Page by pageNumber" in {
      d.getPage(8).pageNumber shouldEqual 8
    }
@@ -34,8 +34,7 @@ class DocumentSpec extends Specification{
      val exampleDoc = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
      "per pageFromXML" in {
         val pageNumbers = exampleDoc map (p => p.pageNumber)
-        pageNumbers.head shouldEqual 5
-        pageNumbers.last shouldEqual 8
+        pageNumbers shouldEqual List(5,8)
      }
 
      "per lineFromXML" in {
