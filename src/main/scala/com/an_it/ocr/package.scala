@@ -8,7 +8,18 @@ package com.an_it
  * Time: 10:38
  */
 package object ocr {
-  type Pages = IndexedSeq[Page]
+
+  implicit class Pages(in: IndexedSeq[Page]) extends IndexedSeq[Page]{
+
+    val pages = in.sortWith( _.pageNumber < _.pageNumber )
+
+    override def apply(idx: Int) = pages(idx)
+
+    override def length = pages.length
+  }
+
+
+
   type Blocks = IndexedSeq[Block]
   type Lines = IndexedSeq[Line]
   type Words = IndexedSeq[Word]
