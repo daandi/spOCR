@@ -67,18 +67,6 @@ object AbbyyXML {
 
   }
 
-  def normalize(coords: Coordinates, pageCoords: Coordinates) : Coordinates = {
-    val ((leftDistance,topDistance),(rightDistance,bottomDistance)) = coords
-    val (_, (pageWidth, pageHeight)) =  pageCoords
-
-    val right = leftDistance + pageWidth - rightDistance - leftDistance
-    val bottom = topDistance+ pageHeight - bottomDistance - topDistance
-
-    ((leftDistance, topDistance),(right, bottom))
-  }
-
-
-
   def pageCoordiantesFromXML(xml: NodeSeq) = {
     val width = xml \ "@width" text
     val height = xml \ "@height" text
@@ -86,6 +74,4 @@ object AbbyyXML {
     ((0,0),(width toInt,height toInt))
   }
 
-
-  //l="4362" t="422" r="4418" b="487"
 }
