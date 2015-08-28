@@ -7,8 +7,9 @@ scalaVersion := "2.11.7"
 scalacOptions += "-deprecation"
 
 libraryDependencies ++= Seq(
-    "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1",
-    "org.specs2" %% "specs2" % "2.3.3" % "test"
+  "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1",
+  "org.scala-lang.modules" % "scala-xml_2.11" % "1.0.5",
+  "org.specs2" %% "specs2-core" % "3.6.4" % "test"
 )
 
 publishMavenStyle := true

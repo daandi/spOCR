@@ -3,6 +3,8 @@ spOCR
 
 A Library to work with OCR files enriched with positional information
 
+![alt tag](https://www.codeship.io/projects/cea760a0-987b-0131-a0a9-6efb656965ef/status)
+
 Supported file-formats
 =====
 AbbyyXML - XML-Format produced by AbbyyFineReader 
@@ -14,7 +16,7 @@ Usage
 General Usage
 ===
 ```scala
-val doc: Doucment
+val doc: Document
 // Iterators
 document pages
 document lines
@@ -46,61 +48,62 @@ class AbbyyXMLSpec extends Specification {
       AbbyyXML.documentFromXML(xml).pages map (_.toText.size) mustEqual IndexedSeq(2215)
     }
     "construct a Page from given XML" in {
-      AbbyyXML.pageFromXML( xml \\ "page" head).toText mustEqual """§a Entste h ung der M a L e r i e.
-                                                                   |und Empfindung seiner Wirkungen als Eigen-
-                                                                   |thum gegeben char.
-                                                                   |Aus dieser allmächtigen Quelle siud auch
-                                                                   |die Kräfte genommen worden^ die der Vater
-                                                                   |aller Geister/ der Macht des Mm- Milletts
-                                                                   |verliehen hatte, und welche m ZWheit des
-                                                                   |Willens, durch die WiMschast des Bösen mis-
-                                                                   |Krauchte;^ Sie haben der in sie wirkenden Ur-
-                                                                   |kraft widerstanden, und find von ihr geschie-
-                                                                   |Den worden.
-                                                                   |~- ■' ii>' ' ■ •
-                                                                   |. Wenn wir Wchdenken wollen , auf was
-                                                                   |Art zwei elastische/Krafte einander, widerstehen,
-                                                                   |so finden wir,. daß es durch eine Ausdehnung
-                                                                   |der einen / und durch die Verengerung der an-
-                                                                   |dern geschehen müsset zumal wenn leztere die
-                                                                   |erste in sich faßt. Aus diesen beiden Vermögen
-                                                                   |besteht Mtch wirklich die WaUcitat, . das Urwe-,
-                                                                   |fin im Mwegung. — Die zmn Widerstände
-                                                                   |MMauchte elaWsche Waft^verwandeltL sich also
-                                                                   |in eine mächtige Ausdehnung ihrer selbst undl
-                                                                   |mußte durch ein aus der göttlichen Kraft aus»
-                                                                   |Segangenes zusammendrückendes Gesaz von allen
-                                                                   |'Seiten umschlossen Mrden» ;„: -%
-                                                                   |? Dieß gab aber nur eine einige Form die
-                                                                   |erste und größte — einen Kreis; — den Grund-
-                                                                   |tß aller andern; Denn jede Form, «nd was
-                                                                   |0 : wir
-                                                                   |/Entstehung der Materle.
-                                                                   |wir in der körperlichen Welt wahrnehmen, ist
-                                                                   |mit krummen Linien umschlossen; es kann also
-                                                                   |aus diesem nrayfanglichen Cirkel weder die 33aitu
-                                                                   |negfaltigkeiL der. Formen und die Menge ihrer
-                                                                   |B.estandcheile, noch die Vermischung vot? Wv
-                                                                   |drigkeiten, so wir überall antreffen, unmittel¬
-                                                                   |bar hergeleitet werden. Folglich muß etwas vors
-                                                                   |gegangen seyn, wodurch Theilung und Zusanv
-                                                                   |mensezung der expansiven und eo^preßrben KraM
-                                                                   |entstanden ist. Ich stelle mir die Sache unter
-                                                                   |folgenden Möglichkeiten vor:
-                                                                   |Das natürlichste Mittel, eine Kraft zu ver-
-                                                                   |mindern, ist Um Zertheilung. mft> glaube ich,
-                                                                   |daß. die bessernde Weisheit Gottes Zuerst die vow
-                                                                   |ihm geschiedne Kraft des WwerßMdes zerstört
-                                                                   |und in kleine Kreise eingeschlosserrhabe; dadurch
-                                                                   |sind die Elemente der Materie entstanden, welche
-                                                                   |in. bestimmter Größe und Anzahl, undurchdring^
-                                                                   |lich und unauflösbar sind.
-                                                                   |Da die Vollkommenheit Gottes sich nicht
-                                                                   |unmittelbar mit dem Bösen abgeben konnte, so
-                                                                   |hat er vermuthlich Werkzeuge gebraucht, welche
-                                                                   |eine verettgernde Kraft habest MßM, die ans-
-                                                                   |treibende zn bestrette^
-                                                                   |mm""".stripMargin
+      AbbyyXML.pageFromXML( xml \\ "page" head).toText mustEqual
+        """§a Entste h ung der M a L e r i e.
+           |und Empfindung seiner Wirkungen als Eigen-
+           |thum gegeben char.
+           |Aus dieser allmächtigen Quelle siud auch
+           |die Kräfte genommen worden^ die der Vater
+           |aller Geister/ der Macht des Mm- Milletts
+           |verliehen hatte, und welche m ZWheit des
+           |Willens, durch die WiMschast des Bösen mis-
+           |Krauchte;^ Sie haben der in sie wirkenden Ur-
+           |kraft widerstanden, und find von ihr geschie-
+           |Den worden.
+           |~- ■' ii>' ' ■ •
+           |. Wenn wir Wchdenken wollen , auf was
+           |Art zwei elastische/Krafte einander, widerstehen,
+           |so finden wir,. daß es durch eine Ausdehnung
+           |der einen / und durch die Verengerung der an-
+           |dern geschehen müsset zumal wenn leztere die
+           |erste in sich faßt. Aus diesen beiden Vermögen
+           |besteht Mtch wirklich die WaUcitat, . das Urwe-,
+           |fin im Mwegung. — Die zmn Widerstände
+           |MMauchte elaWsche Waft^verwandeltL sich also
+           |in eine mächtige Ausdehnung ihrer selbst undl
+           |mußte durch ein aus der göttlichen Kraft aus»
+           |Segangenes zusammendrückendes Gesaz von allen
+           |'Seiten umschlossen Mrden» ;„: -%
+           |? Dieß gab aber nur eine einige Form die
+           |erste und größte — einen Kreis; — den Grund-
+           |tß aller andern; Denn jede Form, «nd was
+           |0 : wir
+           |/Entstehung der Materle.
+           |wir in der körperlichen Welt wahrnehmen, ist
+           |mit krummen Linien umschlossen; es kann also
+           |aus diesem nrayfanglichen Cirkel weder die 33aitu
+           |negfaltigkeiL der. Formen und die Menge ihrer
+           |B.estandcheile, noch die Vermischung vot? Wv
+           |drigkeiten, so wir überall antreffen, unmittel¬
+           |bar hergeleitet werden. Folglich muß etwas vors
+           |gegangen seyn, wodurch Theilung und Zusanv
+           |mensezung der expansiven und eo^preßrben KraM
+           |entstanden ist. Ich stelle mir die Sache unter
+           |folgenden Möglichkeiten vor:
+           |Das natürlichste Mittel, eine Kraft zu ver-
+           |mindern, ist Um Zertheilung. mft> glaube ich,
+           |daß. die bessernde Weisheit Gottes Zuerst die vow
+           |ihm geschiedne Kraft des WwerßMdes zerstört
+           |und in kleine Kreise eingeschlosserrhabe; dadurch
+           |sind die Elemente der Materie entstanden, welche
+           |in. bestimmter Größe und Anzahl, undurchdring^
+           |lich und unauflösbar sind.
+           |Da die Vollkommenheit Gottes sich nicht
+           |unmittelbar mit dem Bösen abgeben konnte, so
+           |hat er vermuthlich Werkzeuge gebraucht, welche
+           |eine verettgernde Kraft habest MßM, die ans-
+           |treibende zn bestrette^
+           |mm""".stripMargin
     }
 
 
@@ -120,7 +123,6 @@ class AbbyyXMLSpec extends Specification {
     }
 
 
-
   }
 
   trait exampleDoc extends Scope {
@@ -132,12 +134,38 @@ class AbbyyXMLSpec extends Specification {
 
 ```
 
-For hOCR
+hOCR
 ===
 
 ```scala
-"A Document" should {
+  "A Document" should {
    val d = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
+   "add all Pages from Files in a given folder" in {
+     HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile).length shouldEqual  2
+   }
+   "access pageFromXML by applying an int to Document" in {
+     pending
+     //d(0).pageNumber shouldEqual  5
+   }
+   "have a method to get Page by pageNumber" in {
+     d.getPage(8).pageNumber shouldEqual 8
+   }
+  }
+  "Iterating over a documentFromXML" should {
+     val exampleDoc = HOCR.fromFolder(getClass.getResource("/doc/hocr/").getFile)
+     "per pageFromXML" in {
+        val pageNumbers = exampleDoc map (p => p.pageNumber)
+        pageNumbers shouldEqual List(5,8)
+     }
+
+     "per lineFromXML" in {
+       exampleDoc.lines.size shouldEqual  78
+     }
+     "per wordFromXML" in {
+       exampleDoc.words.size shouldEqual 725
+     }
+
+   }
 ```
 
-![alt tag](https://www.codeship.io/projects/cea760a0-987b-0131-a0a9-6efb656965ef/status)
+

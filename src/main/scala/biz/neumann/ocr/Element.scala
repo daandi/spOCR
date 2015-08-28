@@ -1,10 +1,5 @@
 package biz.neumann.ocr
 
-import xml.NodeSeq
-import util.parsing.json.{JSONArray, JSONObject}
-import collection.mutable.{ListBuffer, MutableList, ArrayBuffer}
-
-
 /**
  * AN-iT
  * Andreas Neumann

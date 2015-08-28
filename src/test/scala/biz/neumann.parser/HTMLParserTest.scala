@@ -19,7 +19,7 @@ class HTMLParserTest extends Specification {
   "The HTMLParser" should {
     "allow to parse WebPages as XML when an URL is given" in new initParser {
 
-      (fromURL("http://www.an-it.com") \\ "h1" ).text.must_==("Andreas Neuman IT - AN-iT")
+      (fromURL("http://www.neumann.biz") \\ "h1" ).text must_== "Plakattafelbau Neumann GmbH"
     }
     "parse HTML in Files as if working with XML" in new initParser {
       val file =  getClass.getResource("/Seite_Tagebuch_H_C_Lang_08.html").getFile

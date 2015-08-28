@@ -1,7 +1,7 @@
 package biz.neumann.ocr
 
 import format.HOCR
-import org.specs2.mutable.{SpecificationWithJUnit, Specification}
+import org.specs2.mutable.Specification
 
 /**
  * AN-iT

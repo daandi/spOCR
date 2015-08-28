@@ -1,7 +1,7 @@
 package biz.neumann.ocr
 
 import format.HOCR
-import org.specs2.mutable.{SpecificationWithJUnit, Specification}
+import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 
 /**
@@ -15,7 +15,7 @@ import org.specs2.specification.Scope
  * Package: biz.neumann.ocr
  */
 
-class DocumentSpec extends Specification{
+class DocumentSpec extends Specification {
   args.report(showtimes = true )
 
   "A Document" should {
@@ -46,6 +46,4 @@ class DocumentSpec extends Specification{
      }
 
    }
-
-
 }
