@@ -2,7 +2,7 @@ name := "spOCR"
 
 organization := "biz.neumann"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.11.7"
 
 scalacOptions += "-deprecation"
 
