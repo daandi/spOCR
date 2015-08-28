@@ -7,8 +7,8 @@ A Library to work with OCR files enriched with positional information
 
 Supported file-formats
 =====
-AbbyyXML - XML-Format produced by AbbyyFineReader 
-hOCR - Google-Format for encoding scanned Documents in HTML
+* AbbyyXML - XML-Format produced by AbbyyFineReader 
+* hOCR - Google-Format for encoding scanned Documents in HTML
 
 Usage
 ====
